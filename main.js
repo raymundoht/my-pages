@@ -161,7 +161,7 @@
 
   // Social fan cards
   const fan = $('#fan');
-  const FAN = [['TIKTOK', 'g'], ['INSTAGRAM', 'season24'], ['YOUTUBE', 'g'], ['TWITCH', 'darkglit'], ['INSTAGRAM', 'g'], ['TIKTOK', 'gif'], ['YOUTUBE', 'g']];
+  const FAN = [['TIKTOK', 'g'], ['INSTAGRAM', 'g'], ['YOUTUBE', 'g'], ['TWITCH', 'g'], ['INSTAGRAM', 'g'], ['TIKTOK', 'g'], ['YOUTUBE', 'g']];
   fan.innerHTML = FAN.map(([t, k], i) => {
     const inner = k === 'g'
       ? `<div class="media" data-label="Post ${i + 1}"><img src="assets/social${i + 1}.jpg" alt="" onerror="this.remove()"></div>`
@@ -338,73 +338,102 @@
      ========================================================= */
   function setupScroll() {
     // nav states
-    ScrollTrigger.create({ start: 80, onToggle: (s) => $('#nav').classList.toggle('is-scrolled', s.isActive) });
-    $$('.marquee-s, .manifesto, .gallery, .helmets, .footer__panel').forEach((sec) => {
-      ScrollTrigger.create({
-        trigger: sec, start: 'top 40px', end: 'bottom 40px',
-        onToggle: (s) => $('#nav').classList.toggle('is-light', s.isActive && !(sec.classList.contains('gallery') && s.progress > 0.35)),
-        onUpdate: (s) => { if (sec.classList.contains('gallery')) $('#nav').classList.toggle('is-light', s.progress < 0.42); },
-      });
-    });
 
-    // HERO: pin & let marquee slide over, helmet zooms back
-    ScrollTrigger.create({ trigger: '#hero', start: 'top top', end: '+=100%', pin: true, pinSpacing: false });
-    gsap.to(['#heroStage', heroGL && heroGL.canvas].filter(Boolean), { scale: 0.8, yPercent: 8, ease: 'none', scrollTrigger: { trigger: '#hero', start: 'top top', end: '+=100%', scrub: true } });
+    // Nav colour follows whatever background is actually under the logo (handles pins, clips and colour shifts)
+    const navEl = $('#nav');
+    const lum = (c) => { const m = c.match(/[\d.]+/g); if (!m || (m[3] !== undefined && +m[3] < 0.5)) return null; return (0.299 * m[0] + 0.587 * m[1] + 0.114 * m[2]) / 255; };
+    let navQueued = false;
+    const updateNav = () => {
+      navQueued = false;
+      navEl.classList.toggle('is-scrolled', scrollY > 80);
+      const stack = document.elementsFromPoint(28, 34);
+      for (const el of stack) {
+        if (el.closest('#nav')) continue;
+        const l = lum(getComputedStyle(el).backgroundColor);
+        if (l !== null) { navEl.classList.toggle('is-light', l < 0.45); return; }
+      }
+    };
+    const queueNav = () => { if (!navQueued) { navQueued = true; requestAnimationFrame(updateNav); } };
+    addEventListener('scroll', queueNav, { passive: true });
+    ScrollTrigger.addEventListener('refresh', queueNav);
+    gsap.ticker.add(() => { if (ScrollTrigger.isScrolling()) queueNav(); });
 
-    // MARQUEE section: pin, rows slide in opposite directions, image grows
-    const mtl = gsap.timeline({ scrollTrigger: { trigger: '#marqueeS', start: 'top top', end: '+=120%', pin: true, scrub: 0.6 } });
+    // HERO -> MESSAGE: the hero shrinks into the message photo while the dark panel shows behind it
+    const PIN = '+=160%';
+    ScrollTrigger.create({ trigger: '#hero', start: 'top top', end: PIN, pin: true, pinSpacing: false });
+    const heroClip = () => {
+      const m = $('.marquee-s__media').getBoundingClientRect();
+      const t = (m.top / innerHeight) * 100, l = (m.left / innerWidth) * 100;
+      return `inset(${t}% ${l}% ${t}% ${l}% round 14px)`;
+    };
+    const mtl = gsap.timeline({ paused: true });
+    mtl.fromTo('#hero', { clipPath: 'inset(0% 0% 0% 0% round 0px)' }, { clipPath: heroClip, ease: 'power1.inOut', duration: 0.45 }, 0)
+      .fromTo(['#heroStage', heroGL && heroGL.canvas].filter(Boolean), { scale: 1 }, { scale: 0.62, yPercent: 6, ease: 'power1.inOut', duration: 0.45 }, 0)
+      .fromTo('#hero', { filter: 'grayscale(0) brightness(1)' }, { filter: 'grayscale(1) brightness(.62)', ease: 'none', duration: 0.4 }, 0.08)
+      .to('#hero', { autoAlpha: 0, ease: 'none', duration: 0.08 }, 0.45);
     $$('.mrow').forEach((row) => {
       const dir = +row.dataset.dir;
-      mtl.fromTo(row.querySelector('.mrow__track'), { xPercent: dir > 0 ? -40 : 0 }, { xPercent: dir > 0 ? 0 : -40, ease: 'none' }, 0);
+      mtl.fromTo(row.querySelector('.mrow__track'), { xPercent: dir > 0 ? -45 : 0 }, { xPercent: dir > 0 ? 0 : -45, ease: 'none', duration: 1 }, 0);
     });
-    mtl.fromTo('.marquee-s__media', { scale: 0.7, filter: 'grayscale(1) brightness(.7)' }, { scale: 1.15, filter: 'grayscale(0) brightness(1)', ease: 'none' }, 0)
-      .to('.signature--marquee .sig-path', { strokeDashoffset: 0, ease: 'none', duration: 0.6 }, 0.1)
-      .to('.marquee-s__rows', { opacity: 0.2, ease: 'none', duration: 0.3 }, 0.7);
+    mtl.fromTo('.marquee-s__media', { scale: 1 }, { scale: 1.08, ease: 'none', duration: 0.5 }, 0.5)
+      .fromTo('.signature--marquee', { scale: 0.55 }, { scale: 1, ease: 'power2.out', duration: 0.4 }, 0.5)
+      .to('.signature--marquee .sig-path', { strokeDashoffset: 0, ease: 'none', duration: 0.4 }, 0.5)
+      .fromTo('.marquee-s__head', { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.15 }, 0.55);
+    ScrollTrigger.create({ trigger: '#marqueeS', start: 'top top', end: PIN, pin: true, scrub: 0.6, animation: mtl, invalidateOnRefresh: true });
 
-    // MANIFESTO: lime wipe per line
-    $$('#manifestoText .line').forEach((line, i) => {
-      const words = line.querySelectorAll('.word');
-      const wipe = line.querySelector('.wipe');
-      gsap.set(words, { opacity: 0 });
-      gsap.timeline({ scrollTrigger: { trigger: line, start: 'top 82%', toggleActions: 'play none none reverse' } })
-        .set(wipe, { transformOrigin: 'left' })
-        .to(wipe, { scaleX: 1, duration: 0.45, ease: 'expo.in', delay: i * 0.02 })
-        .set(words, { opacity: 1 })
-        .set(wipe, { transformOrigin: 'right' })
-        .to(wipe, { scaleX: 0, duration: 0.55, ease: 'expo.out' });
+    // MANIFESTO: each line rises out of its own mask, tied to scroll
+    $$('#manifestoText .line').forEach((line) => {
+      gsap.fromTo(line.querySelectorAll('.word'), { yPercent: 105 }, { yPercent: 0, ease: 'power2.out', stagger: 0.04,
+        scrollTrigger: { trigger: line, start: 'top 92%', end: 'top 62%', scrub: 0.5 } });
     });
 
-    // GALLERY: parallax + background shift + caption reveals
+    // GALLERY: pinned horizontal track (desktop) with colour shift dark -> olive -> ivory
     if (!isMobile()) {
+      const track = $('#galleryTrack');
+      const dist = () => track.scrollWidth - innerWidth;
+      const htl = gsap.timeline({ scrollTrigger: { trigger: '#gallery', start: 'top top', end: () => '+=' + dist() * 1.15, pin: true, scrub: 0.8, invalidateOnRefresh: true } });
+      const hTween = gsap.to(track, { x: () => -dist(), ease: 'none', duration: 1 });
+      htl.add(hTween, 0)
+        .to('#gallery', { keyframes: [{ backgroundColor: '#282c20', duration: 0.12 }, { backgroundColor: '#697067', color: '#f4f4ed', duration: 0.18 }, { backgroundColor: '#c5cac2', color: '#111112', duration: 0.15 }, { backgroundColor: '#efefe5', duration: 0.2 }], ease: 'none' }, 0)
+        .to('#gallery .topo', { opacity: 0.5, ease: 'none', duration: 0.6 }, 0.1);
       $$('.gallery [data-speed]').forEach((el) => {
         const sp = parseFloat(el.dataset.speed);
-        gsap.fromTo(el, { y: () => innerHeight * sp }, { y: () => -innerHeight * sp, ease: 'none', scrollTrigger: { trigger: '#gallery', start: 'top bottom', end: 'bottom top', scrub: true, invalidateOnRefresh: true } });
+        htl.fromTo(el, { y: () => innerHeight * sp * 0.5 }, { y: () => -innerHeight * sp * 0.5, ease: 'none', duration: 1 }, 0);
       });
+      $$('.gallery .media').forEach((m) => {
+        const img = m.firstElementChild;
+        const st = () => ({ trigger: m, containerAnimation: hTween, start: 'left 98%', toggleActions: 'play none none reverse' });
+        gsap.fromTo(m, { clipPath: 'inset(100% 0 0 0)' }, { clipPath: 'inset(0% 0 0 0)', duration: 1.2, ease: 'expo.out', scrollTrigger: st() });
+        if (img) gsap.fromTo(img, { scale: 1.35 }, { scale: 1, duration: 1.6, ease: 'expo.out', scrollTrigger: st() });
+      });
+      $$('.quote').forEach((q) => {
+        gsap.from(q.querySelector('p'), { y: 30, opacity: 0, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: q, containerAnimation: hTween, start: 'left 90%' } });
+        drawSig(q.querySelector('.sig-path'), { paused: true, scrollTrigger: { trigger: q, containerAnimation: hTween, start: 'left 80%' } });
+      });
+    } else {
+      gsap.timeline({ scrollTrigger: { trigger: '#gallery', start: '20% center', end: '60% center', scrub: true } })
+        .to('#gallery', { backgroundColor: '#697067', ease: 'none' })
+        .to('#gallery', { backgroundColor: '#efefe5', color: '#111112', ease: 'none' });
+      $$('.gallery .media').forEach((m) => {
+        gsap.fromTo(m, { clipPath: 'inset(100% 0 0 0)' }, { clipPath: 'inset(0% 0 0 0)', duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: m, start: 'top 92%' } });
+      });
+      $$('.quote').forEach((q) => drawSig(q.querySelector('.sig-path'), { paused: true, scrollTrigger: { trigger: q, start: 'top 75%' } }));
     }
-    gsap.timeline({ scrollTrigger: { trigger: '#gallery', start: '25% center', end: '45% center', scrub: true } })
-      .to('#gallery', { backgroundColor: '#a8ab9b', color: '#111112', ease: 'none' })
-      .to('#gallery .topo', { opacity: 0.6, ease: 'none' }, 0);
-    $$('.gallery .media').forEach((m) => {
-      gsap.fromTo(m, { clipPath: 'inset(100% 0 0 0)' }, { clipPath: 'inset(0% 0 0 0)', duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: m, start: 'top 92%' } });
-      const img = m.firstElementChild;
-      if (img) gsap.fromTo(img, { scale: 1.35 }, { scale: 1, duration: 1.6, ease: 'expo.out', scrollTrigger: { trigger: m, start: 'top 92%' } });
-    });
-    $$('.quote').forEach((q) => {
-      gsap.from(q.querySelector('p'), { y: 30, opacity: 0, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: q, start: 'top 85%' } });
-      drawSig(q.querySelector('.sig-path'), { paused: true, scrollTrigger: { trigger: q, start: 'top 75%' } });
-    });
 
-    // ON / OFF TRACK
-    gsap.from('.otot__title h2 span', { yPercent: 110, opacity: 0, stagger: 0.08, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '.otot__head', start: 'top 60%' } });
-    gsap.to('.otot__scribble .sig-path', { strokeDashoffset: 0, duration: 1.4, ease: 'power2.inOut', scrollTrigger: { trigger: '.otot__head', start: 'top 45%' } });
-    gsap.fromTo('.otot__panel', { clipPath: 'inset(12% 6% 0 6% round 1.5rem)' }, { clipPath: 'inset(0% 0% 0 0% round 0rem)', ease: 'none', scrollTrigger: { trigger: '.otot__split', start: 'top bottom', end: 'top top', scrub: true } });
-    $$('.otot__panel .media').forEach((m) => gsap.fromTo(m, { scale: 1.25 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: '.otot__split', start: 'top bottom', end: 'bottom top', scrub: true } }));
+    // ON / OFF TRACK: cut-outs slide in, dark masks pull away, panorama rises
+    const otl = gsap.timeline({ scrollTrigger: { trigger: '.otot__head', start: 'top 70%', toggleActions: 'play none none reverse' } });
+    otl.fromTo('.otot__cut--l', { xPercent: -100 }, { xPercent: 0, duration: 1.4, ease: 'expo.out' }, 0)
+      .fromTo('.otot__cut--r', { xPercent: 100 }, { xPercent: 0, duration: 1.4, ease: 'expo.out' }, 0)
+      .fromTo('.otot__mask', { scaleX: 1 }, { scaleX: 0, duration: 1.1, ease: 'expo.inOut', stagger: 0.12 }, 0.2)
+      .fromTo('.otot__btn', { scale: 0 }, { scale: 1, duration: 0.8, ease: 'back.out(2)', stagger: 0.1 }, 0.9)
+      .to('.otot__scribble .sig-path', { strokeDashoffset: 0, duration: 1.2, ease: 'power2.inOut' }, 0.8);
+    gsap.fromTo('.otot__pano img', { scale: 1.2, yPercent: -6 }, { scale: 1, yPercent: 6, ease: 'none', scrollTrigger: { trigger: '.otot__pano', start: 'top bottom', end: 'bottom top', scrub: true } });
 
     // HELMETS grid batch reveal
-    gsap.set('.hcard__inner', { y: 60, opacity: 0, rotate: 8 });
+    gsap.set('.hcard__inner', { y: 60, opacity: 0 });
     ScrollTrigger.batch('.hcard', {
       start: 'top 90%',
-      onEnter: (els) => gsap.to(els.map((e) => e.querySelector('.hcard__inner')), { y: 0, opacity: 1, rotate: 0, stagger: 0.08, duration: 1.2, ease: 'expo.out' }),
+      onEnter: (els) => gsap.to(els.map((e) => e.querySelector('.hcard__inner')), { y: 0, opacity: 1, stagger: 0.08, duration: 1.2, ease: 'expo.out' }),
     });
     $$('.hcard').forEach((c) => {
       const inner = c.querySelector('.hcard__inner svg');
@@ -421,12 +450,14 @@
     });
 
     // STORE parallax
-    $$('.store [data-speed]').forEach((el) => {
+    if (!isMobile()) $$('.store [data-speed]').forEach((el) => {
       const sp = parseFloat(el.dataset.speed);
       gsap.fromTo(el, { y: () => 200 * sp }, { y: () => -260 * sp, ease: 'none', scrollTrigger: { trigger: '#store', start: 'top bottom', end: 'bottom top', scrub: true, invalidateOnRefresh: true } });
     });
     gsap.fromTo('.sp5', { rotate: -12 }, { rotate: 8, ease: 'none', scrollTrigger: { trigger: '#store', start: 'top bottom', end: 'bottom top', scrub: true } });
 
+    // PARTNERS: logo row moves with the scroll
+    gsap.fromTo('.logos__track', { xPercent: 0 }, { xPercent: -40, ease: 'none', scrollTrigger: { trigger: '#partners', start: 'top bottom', end: 'bottom top', scrub: 0.6 } });
     // PARTNERS scribble
     gsap.to('.partners__scribble .sig-path', { strokeDashoffset: 0, ease: 'none', scrollTrigger: { trigger: '#partners', start: 'top 80%', end: 'center center', scrub: 0.8 } });
 
@@ -446,9 +477,14 @@
 
     // FOOTER
     gsap.from('.footer__panel', { y: 120, ease: 'none', scrollTrigger: { trigger: '#footer', start: 'top bottom', end: 'top 20%', scrub: true } });
-    gsap.from('.footer__helmet svg', { yPercent: 60, rotate: -10, ease: 'none', scrollTrigger: { trigger: '#footer', start: 'top bottom', end: 'bottom bottom', scrub: true } });
+    gsap.from('.footer__figure', { yPercent: 45, ease: 'none', scrollTrigger: { trigger: '#footer', start: 'top bottom', end: 'bottom bottom', scrub: true } });
     drawSig($('.signature--footer .sig-path'), { scrollTrigger: { trigger: '.footer__title', start: 'top 75%' } });
     gsap.from('.flink', { yPercent: 100, opacity: 0, stagger: 0.04, duration: 0.9, ease: 'expo.out', scrollTrigger: { trigger: '.footer__cols', start: 'top 85%' } });
+
+    // Triggers above were created out of page order (nav states first, pins later): re-order so
+    // every start/end accounts for the pinned sections that come before it.
+    ScrollTrigger.sort();
+    ScrollTrigger.refresh();
   }
 
   /* =========================================================
@@ -469,6 +505,11 @@
   }
   $('#burger').addEventListener('click', () => toggleMenu());
   $$('.menu__link').forEach((a) => a.addEventListener('click', () => toggleMenu(false)));
+  // Menu hover: swap the photo on the right
+  const menuImgs = $$('.menu__media .media');
+  $$('.menu__link').forEach((a) => ['mouseenter', 'touchstart'].forEach((ev) => a.addEventListener(ev, () => {
+    menuImgs.forEach((m, i) => m.classList.toggle('is-active', i === +a.dataset.img));
+  }, { passive: true })));
   addEventListener('keydown', (e) => e.key === 'Escape' && menuOpen && toggleMenu(false));
 
   // anchor links via lenis

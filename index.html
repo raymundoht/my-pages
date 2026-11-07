@@ -47,12 +47,20 @@
   <div class="menu" id="menu" aria-hidden="true">
     <div class="menu__bg"></div>
     <nav class="menu__links">
-      <a href="#" class="menu__link"><span>Home</span></a>
-      <a href="#ontrack" class="menu__link"><span>On Track</span></a>
-      <a href="#ontrack" class="menu__link"><span>Off Track</span></a>
-      <a href="#helmets" class="menu__link"><span>Calendar</span></a>
-      <a href="#store" class="menu__link"><span>Store</span></a>
+      <a href="#" class="menu__link" data-img="0"><span>Home</span></a>
+      <a href="#ontrack" class="menu__link" data-img="1"><span>On Track</span></a>
+      <a href="#ontrack" class="menu__link" data-img="2"><span>Off Track</span></a>
+      <a href="#helmets" class="menu__link" data-img="3"><span>Calendar</span></a>
+      <a href="#store" class="menu__link" data-img="4"><span>Store</span></a>
     </nav>
+    <div class="menu__media" aria-hidden="true">
+      <div class="media is-active"><img src="assets/menu1.jpg" alt="" onerror="this.remove()"></div>
+      <div class="media"><img src="assets/menu2.jpg" alt="" onerror="this.remove()"></div>
+      <div class="media"><img src="assets/menu3.jpg" alt="" onerror="this.remove()"></div>
+      <div class="media"><img src="assets/menu4.jpg" alt="" onerror="this.remove()"></div>
+      <div class="media"><img src="assets/menu5.jpg" alt="" onerror="this.remove()"></div>
+      <span class="eyebrow menu__badge">McLaren F1 · since 2019</span>
+    </div>
     <div class="menu__foot">
       <a href="#">TikTok</a><a href="#">Instagram</a><a href="#">YouTube</a><a href="#">Twitch</a>
     </div>
@@ -90,8 +98,8 @@
         <span class="eyebrow">Message from Lando</span>
       </div>
       <div class="marquee-s__rows">
-        <div class="mrow mrow--serif" data-dir="-1"><div class="mrow__track"><span>FEELS LIKE HOME&nbsp;</span><span>BEST AT HOME&nbsp;</span><span>FEELS LIKE HOME&nbsp;</span><span>BEST AT HOME&nbsp;</span></div></div>
-        <div class="mrow mrow--sans" data-dir="1"><div class="mrow__track"><span>RACE WEEKEND · REMEMBER&nbsp;</span><span>RACE WEEKEND · REMEMBER&nbsp;</span><span>RACE WEEKEND · REMEMBER&nbsp;</span></div></div>
+        <div class="mrow mrow--serif" data-dir="-1"><div class="mrow__track"><span>AT HOME WE DID IT&nbsp;·&nbsp;</span><span>AT HOME WE DID IT&nbsp;·&nbsp;</span><span>AT HOME WE DID IT&nbsp;·&nbsp;</span></div></div>
+        <div class="mrow mrow--sans" data-dir="1"><div class="mrow__track"><span>I WILL REMEMBER A BRITISH WIN&nbsp;·&nbsp;</span><span>I WILL REMEMBER A BRITISH WIN&nbsp;·&nbsp;</span></div></div>
       </div>
       <div class="marquee-s__media media" data-label="Mensaje · retrato">
         <img src="assets/message.jpg" alt="" onerror="this.remove()">
@@ -119,41 +127,47 @@
     </section>
 
     <!-- ============ SCATTERED GALLERY ============ -->
-    <section class="gallery" id="gallery">
+        <section class="gallery" id="gallery">
       <canvas class="topo topo--fixed" data-color="#3a3e30" data-bg="transparent"></canvas>
-      <figure class="g g1" data-speed="0.15"><figcaption class="eyebrow">Qatar, 2024</figcaption><div class="media" data-label="Qatar 2024"><img src="assets/g1.jpg" alt="" onerror="this.remove()"></div></figure>
-      <blockquote class="g gq1 quote" data-speed="-0.1"><p class="serif">It doesn’t matter where you start, it’s how you progress from there.</p><svg class="mini-sig" viewBox="0 0 600 420"><path class="sig-path" d="M70 330c60-40 150-140 210-240 18-30 30-60 10-50-40 20-80 160-60 230 10 30 40-40 70-110 10-25 5 40 20 50 20 15 60-90 80-100 15-8-15 90 5 95 25 5 70-110 120-130"/></svg></blockquote>
-      <figure class="g g2" data-speed="0.35"><figcaption class="eyebrow">FIA Prize Giving, 2024</figcaption><div class="media" data-label="FIA 2024"><img src="assets/g2.jpg" alt="" onerror="this.remove()"></div></figure>
-      <figure class="g g3" data-speed="-0.2"><figcaption class="eyebrow">Miami GP, 2024</figcaption><div class="media" data-label="Miami 2024"><img src="assets/g3.jpg" alt="" onerror="this.remove()"></div></figure>
-      <figure class="g g4" data-speed="0.25"><figcaption class="eyebrow">Monaco, 2023</figcaption><div class="media" data-label="Monaco 2023"><img src="assets/g4.jpg" alt="" onerror="this.remove()"></div></figure>
-      <figure class="g g5" data-speed="0.05"><figcaption class="eyebrow">Britain, 2025</figcaption><div class="media media--helmet" data-helmet="season25"></div></figure>
-      <figure class="g g6" data-speed="0.4"><figcaption class="eyebrow">Battersea, 2024</figcaption><div class="media" data-label="Battersea 2024"><img src="assets/g6.jpg" alt="" onerror="this.remove()"></div></figure>
-      <figure class="g g7" data-speed="-0.15"><figcaption class="eyebrow">High Performance Gala, 2024</figcaption><div class="media" data-label="Gala 2024"><img src="assets/g7.jpg" alt="" onerror="this.remove()"></div></figure>
-      <figure class="g g8" data-speed="0.3"><figcaption class="eyebrow">Barcelona, 2024</figcaption><div class="media" data-label="Barcelona 2024"><img src="assets/g8.jpg" alt="" onerror="this.remove()"></div></figure>
-      <blockquote class="g gq2 quote" data-speed="0.1"><p class="serif">Since I was 7 years old and had my first experience with kart racing, I’ve worked tirelessly to make that dream come true.</p><svg class="mini-sig" viewBox="0 0 600 420"><path class="sig-path" d="M70 330c60-40 150-140 210-240 18-30 30-60 10-50-40 20-80 160-60 230 10 30 40-40 70-110 10-25 5 40 20 50 20 15 60-90 80-100 15-8-15 90 5 95 25 5 70-110 120-130"/></svg></blockquote>
-      <figure class="g g9" data-speed="0.45"><figcaption class="eyebrow">Austria, 2020</figcaption><div class="media" data-label="Austria 2020"><img src="assets/g9.jpg" alt="" onerror="this.remove()"></div></figure>
-      <figure class="g g10" data-speed="-0.05"><figcaption class="eyebrow">US, 2024</figcaption><div class="media" data-label="US 2024"><img src="assets/g10.jpg" alt="" onerror="this.remove()"></div></figure>
+      <div class="gallery__track" id="galleryTrack">
+        <figure class="g g1" data-speed="0.1"><figcaption class="eyebrow">Qatar, 2024</figcaption><div class="media" data-label="Qatar 2024"><img src="assets/g1.jpg" alt="" onerror="this.remove()"></div></figure>
+        <blockquote class="g gq1 quote" data-speed="-0.1"><p class="serif">It doesn’t matter where you start, it’s how you progress from there.</p><svg class="mini-sig" viewBox="0 0 600 420"><path class="sig-path" d="M70 330c60-40 150-140 210-240 18-30 30-60 10-50-40 20-80 160-60 230 10 30 40-40 70-110 10-25 5 40 20 50 20 15 60-90 80-100 15-8-15 90 5 95 25 5 70-110 120-130"/></svg></blockquote>
+        <figure class="g g2" data-speed="0.25"><figcaption class="eyebrow">FIA Prize Giving, 2024</figcaption><div class="media" data-label="FIA 2024"><img src="assets/g2.jpg" alt="" onerror="this.remove()"></div></figure>
+        <figure class="g g6" data-speed="-0.15"><figcaption class="eyebrow">Miami GP, 2024</figcaption><div class="media" data-label="Miami 2024"><img src="assets/g6.jpg" alt="" onerror="this.remove()"></div></figure>
+        <figure class="g g11" data-speed="0.3"><figcaption class="eyebrow">Golf day, 2024</figcaption><div class="media" data-label="Golf 2024"><img src="assets/g11.jpg" alt="" onerror="this.remove()"></div></figure>
+        <figure class="g g5" data-speed="-0.05"><figcaption class="eyebrow">Britain, 2025</figcaption><div class="media" data-label="Britain 2025"><img src="assets/g5.jpg" alt="" onerror="this.remove()"></div><span class="g5__pill eyebrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4h7l1 2h6v9h-7l-1-2H7v8z" fill="currentColor"/></svg>Home race</span></figure>
+        <figure class="g g12" data-speed="0.2"><figcaption class="eyebrow">Battersea, 2024</figcaption><div class="media" data-label="Battersea 2024"><img src="assets/g12.jpg" alt="" onerror="this.remove()"></div></figure>
+        <figure class="g g7" data-speed="-0.2"><figcaption class="eyebrow">High Performance Gala, 2024</figcaption><div class="media" data-label="Gala 2024"><img src="assets/g7.jpg" alt="" onerror="this.remove()"></div></figure>
+        <figure class="g g8" data-speed="0.1"><figcaption class="eyebrow">Barcelona, 2024</figcaption><div class="media" data-label="Barcelona 2024"><img src="assets/g8.jpg" alt="" onerror="this.remove()"></div></figure>
+        <blockquote class="g gq2 quote" data-speed="-0.05"><p class="serif">Since I was 7 years old and had my first experience with kart racing, I’ve worked tirelessly to make that dream come true.</p><svg class="mini-sig" viewBox="0 0 600 420"><path class="sig-path" d="M70 330c60-40 150-140 210-240 18-30 30-60 10-50-40 20-80 160-60 230 10 30 40-40 70-110 10-25 5 40 20 50 20 15 60-90 80-100 15-8-15 90 5 95 25 5 70-110 120-130"/></svg></blockquote>
+        <figure class="g g3" data-speed="0.25"><figcaption class="eyebrow">Silverstone, 2025</figcaption><div class="media" data-label="Silverstone 2025"><img src="assets/g3.jpg" alt="" onerror="this.remove()"></div></figure>
+        <figure class="g g10" data-speed="-0.15"><figcaption class="eyebrow">US, 2024</figcaption><div class="media" data-label="US 2024"><img src="assets/g10.jpg" alt="" onerror="this.remove()"></div></figure>
+        <figure class="g g9" data-speed="0.15"><figcaption class="eyebrow">Austria, 2020</figcaption><div class="media" data-label="Austria 2020"><img src="assets/g9.jpg" alt="" onerror="this.remove()"></div></figure>
+      </div>
     </section>
 
     <!-- ============ ON TRACK / OFF TRACK ============ -->
     <section class="otot" id="ontrack">
       <div class="otot__head">
-        <div class="otot__title">
-          <h2><span class="serif-it">ON</span><span>TRACK</span></h2>
+        <img class="otot__cut otot__cut--l" src="assets/otot-left.jpg" alt="" onerror="this.remove()">
+        <img class="otot__cut otot__cut--r" src="assets/otot-right.jpg" alt="" onerror="this.remove()">
+        <div class="otot__cols">
+          <a href="#" class="otot__col otot__col--on">
+            <h2><span class="serif-it">ON</span><span>TRACK</span></h2>
+            <p>Most recent results, career stats and photos from trackside.</p>
+            <span class="otot__btn" aria-label="On Track"><svg class="ico"><use href="#arrow"/></svg></span>
+            <i class="otot__mask" aria-hidden="true"></i>
+          </a>
+          <a href="#" class="otot__col otot__col--off">
+            <h2><span class="serif-it">OFF</span><span>TRACK</span></h2>
+            <p>Campaigns, shoots and other such promotional materials for fans.</p>
+            <span class="otot__btn" aria-label="Off Track"><svg class="ico"><use href="#arrow"/></svg></span>
+            <i class="otot__mask" aria-hidden="true"></i>
+          </a>
           <svg class="otot__scribble" viewBox="0 0 300 120"><path class="sig-path" d="M10 90c30-60 60-80 80-60s-30 70-10 70 50-80 80-80-20 60 10 60 60-40 120-70"/></svg>
-          <h2><span class="serif-it">OFF</span><span>TRACK</span></h2>
         </div>
       </div>
-      <div class="otot__split">
-        <a href="#" class="otot__panel otot__panel--on">
-          <div class="media media--helmet" data-helmet="season24"><img src="assets/ontrack.jpg" alt="" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()"></div>
-          <div class="otot__info"><h3>ON TRACK</h3><p>Most recent results, career stats and photos from trackside.</p><span class="btn btn--lime"><span class="btn__txt" data-text="EXPLORE">EXPLORE</span><svg class="ico"><use href="#arrow"/></svg></span></div>
-        </a>
-        <a href="#" class="otot__panel otot__panel--off">
-          <div class="media" data-label="Off Track · campaña"><img src="assets/offtrack.jpg" alt="" onerror="this.remove()"></div>
-          <div class="otot__info"><h3>OFF TRACK</h3><p>Campaigns, shoots and other such promotional materials for fans.</p><span class="btn btn--lime"><span class="btn__txt" data-text="EXPLORE">EXPLORE</span><svg class="ico"><use href="#arrow"/></svg></span></div>
-        </a>
-      </div>
+      <div class="otot__pano media" data-label="On track · garaje"><img src="assets/otot-pano.jpg" alt="" onerror="this.remove()"></div>
     </section>
 
     <!-- ============ HELMETS ============ -->
@@ -180,9 +194,8 @@
       </div>
       <div class="store__media">
         <div class="sp sp1 media" data-speed="0.1" data-label="Hoodie · campeón"><img src="assets/store1.jpg" alt="" onerror="this.remove()"></div>
-        <div class="sp sp2 gold" data-speed="0.35"><span class="serif">Champion</span><small>Limited edition</small></div>
-        <div class="sp sp3 tee" data-speed="0.5"><div class="tee__shape"><div class="tee__print"></div></div></div>
-        <div class="sp sp4 tee tee--dark" data-speed="0.25"><div class="tee__shape"><div class="tee__print tee__print--lime"></div></div></div>
+        <div class="sp sp4 media" data-speed="0.25" data-label="Gorra"><img src="assets/store3.jpg" alt="" onerror="this.remove()"></div>
+        <div class="sp sp7 gold" data-speed="0.7"><span class="serif">Champion</span><small>Limited edition</small></div>
         <div class="sp sp5 chrome" data-speed="0.6">LN1</div>
       </div>
     </section>
@@ -228,12 +241,13 @@
             <a href="#" class="flink">HOME</a><a href="#ontrack" class="flink">ON TRACK</a><a href="#ontrack" class="flink">OFF TRACK</a><a href="#helmets" class="flink">CALENDAR</a>
             <a href="#store" class="flink flink--lime">STORE</a>
           </div>
-          <div class="footer__helmet" data-helmet="footer"></div>
+          <div class="footer__figure"><img src="assets/footer-figure.png" alt="" onerror="this.remove()"></div>
           <div class="footer__col footer__col--right">
             <span class="eyebrow">Follow on</span>
             <a href="#" class="flink">TIKTOK</a><a href="#" class="flink">INSTAGRAM</a><a href="#" class="flink">YOUTUBE</a><a href="#" class="flink">TWITCH</a>
           </div>
         </div>
+        <div class="footer__sponsors" aria-hidden="true"><div class="footer__sponsors-track"><span>VELOCE</span><span class="serif">Apex&amp;Co</span><span>PITLANE</span><span class="serif">Hartwell</span><span>QUADRA</span><span>NOVA·TEK</span><span class="serif">Meridian</span><span>STRAIGHTLINE</span><span>VELOCE</span><span class="serif">Apex&amp;Co</span><span>PITLANE</span><span class="serif">Hartwell</span><span>QUADRA</span><span>NOVA·TEK</span><span class="serif">Meridian</span><span>STRAIGHTLINE</span></div></div>
         <a href="#" class="btn btn--lime footer__biz magnetic"><span class="btn__txt" data-text="BUSINESS ENQUIRIES">BUSINESS ENQUIRIES</span><svg class="ico"><use href="#arrow"/></svg></a>
       </div>
       <div class="footer__bottom">
