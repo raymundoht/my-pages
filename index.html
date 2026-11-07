@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lando Norris — Recreación</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Mona+Sans:wdth,wght@75..125,400..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="is-loading">
+
+  <!-- ============ LOADER ============ -->
+  <div class="loader" id="loader">
+    <svg class="loader__mark" viewBox="0 0 60 40" aria-hidden="true"><use href="#mark"/></svg>
+    <div class="loader__count"><span id="loaderCount">0</span>%</div>
+    <div class="loader__label">Lando Norris</div>
+  </div>
+
+  <!-- ============ SVG SPRITES ============ -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="mark" viewBox="0 0 60 40">
+        <path d="M6 4h8v24h14v8H6z M30 4h24v8l-10 24h-9l9.5-24H30z" fill="currentColor"/>
+      </symbol>
+      <symbol id="arrow" viewBox="0 0 16 16"><path d="M3 13 13 3M5 3h8v8" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+      <symbol id="bag" viewBox="0 0 16 16"><path d="M3 5h10l-1 9H4zM6 5V3.5a2 2 0 0 1 4 0V5" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
+    </defs>
+  </svg>
+
+  <!-- ============ NAV ============ -->
+  <header class="nav" id="nav">
+    <a href="#" class="nav__logo" aria-label="Inicio">
+      <span class="serif">LANDO</span>
+      <span class="sans">NORRIS</span>
+    </a>
+    <a href="#" class="nav__mark" aria-label="Logo"><svg viewBox="0 0 60 40"><use href="#mark"/></svg></a>
+    <div class="nav__right">
+      <a href="#store" class="btn btn--lime magnetic"><svg class="ico"><use href="#bag"/></svg><span class="btn__txt" data-text="STORE">STORE</span></a>
+      <button class="nav__burger magnetic" id="burger" aria-label="Menú"><span></span><span></span></button>
+    </div>
+  </header>
+
+  <!-- ============ MENU OVERLAY ============ -->
+  <div class="menu" id="menu" aria-hidden="true">
+    <div class="menu__bg"></div>
+    <nav class="menu__links">
+      <a href="#" class="menu__link"><span>Home</span></a>
+      <a href="#ontrack" class="menu__link"><span>On Track</span></a>
+      <a href="#ontrack" class="menu__link"><span>Off Track</span></a>
+      <a href="#helmets" class="menu__link"><span>Calendar</span></a>
+      <a href="#store" class="menu__link"><span>Store</span></a>
+    </nav>
+    <div class="menu__foot">
+      <a href="#">TikTok</a><a href="#">Instagram</a><a href="#">YouTube</a><a href="#">Twitch</a>
+    </div>
+  </div>
+
+  <main id="main">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="hero">
+      <canvas class="topo" data-color="#e2e3d8" data-bg="#f8f8f3"></canvas>
+      <div class="hero__stage" id="heroStage">
+        <div class="hero__portrait">
+          <img src="assets/hero.png" alt="" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()">
+          <div class="hero__ph" data-helmet="hero"></div>
+        </div>
+        <div class="hero__reveal" id="heroReveal">
+          <img class="hero__helmet-img" src="assets/hero-helmet.png" alt="" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()">
+          <div class="hero__ph hero__ph--alt" data-helmet="hero-alt"></div>
+        </div>
+      </div>
+      <h1 class="hero__title sr">Lando Norris — McLaren Formula 1 Driver</h1>
+      <aside class="hero__card">
+        <div class="hero__card-row"><span class="eyebrow">Next race</span><span class="dot"></span></div>
+        <div class="hero__card-race serif">São Paulo <em>GP</em></div>
+        <div class="hero__card-badge"><svg viewBox="0 0 60 40"><use href="#mark"/></svg><span class="eyebrow">McLaren F1<br>since 2019</span></div>
+      </aside>
+      <div class="hero__scroll eyebrow">Scroll</div>
+    </section>
+
+    <!-- ============ MARQUEE (dark panel that covers hero) ============ -->
+    <section class="marquee-s" id="marqueeS">
+      <canvas class="topo" data-color="#363a2c" data-bg="#282c20"></canvas>
+      <div class="marquee-s__head">
+        <svg viewBox="0 0 60 40"><use href="#mark"/></svg>
+        <span class="eyebrow">Message from Lando</span>
+      </div>
+      <div class="marquee-s__rows">
+        <div class="mrow mrow--serif" data-dir="-1"><div class="mrow__track"><span>FEELS LIKE HOME&nbsp;</span><span>BEST AT HOME&nbsp;</span><span>FEELS LIKE HOME&nbsp;</span><span>BEST AT HOME&nbsp;</span></div></div>
+        <div class="mrow mrow--sans" data-dir="1"><div class="mrow__track"><span>RACE WEEKEND · REMEMBER&nbsp;</span><span>RACE WEEKEND · REMEMBER&nbsp;</span><span>RACE WEEKEND · REMEMBER&nbsp;</span></div></div>
+      </div>
+      <div class="marquee-s__media media" data-label="Mensaje · retrato">
+        <img src="assets/message.jpg" alt="" onerror="this.remove()">
+      </div>
+      <svg class="signature signature--marquee" viewBox="0 0 600 420" aria-hidden="true">
+        <path class="sig-path" d="M70 330c60-40 150-140 210-240 18-30 30-60 10-50-40 20-80 160-60 230 10 30 40-40 70-110 10-25 5 40 20 50 20 15 60-90 80-100 15-8-15 90 5 95 25 5 70-110 120-130 30-12-80 120-150 160-60 35-200 40-260 20M420 160c-10 40-20 90-15 120M380 230l120-25"/>
+      </svg>
+    </section>
+
+    <!-- ============ MANIFESTO ============ -->
+    <section class="manifesto" id="manifesto">
+      <div class="manifesto__badge">
+        <svg class="rotating" viewBox="0 0 100 100"><defs><path id="circ" d="M50 50m-36 0a36 36 0 1 1 72 0a36 36 0 1 1-72 0"/></defs><text><textPath href="#circ">MCLAREN F1 · SINCE 2019 · MCLAREN F1 · SINCE 2019 ·</textPath></text></svg>
+        <svg class="manifesto__mark" viewBox="0 0 60 40"><use href="#mark"/></svg>
+      </div>
+      <p class="manifesto__text" id="manifestoText">
+        <span class="line"><em>REDEFINING</em> LIMITS,</span>
+        <span class="line">FIGHTING FOR <em>WINS</em>,</span>
+        <span class="line">BRINGING IT ALL IN</span>
+        <span class="line">ALL WAYS. DEFINING A</span>
+        <span class="line"><em>LEGACY</em> IN FORMULA 1</span>
+        <span class="line">ON AND OFF THE</span>
+        <span class="line">TRACK.</span>
+      </p>
+    </section>
+
+    <!-- ============ SCATTERED GALLERY ============ -->
+    <section class="gallery" id="gallery">
+      <canvas class="topo topo--fixed" data-color="#3a3e30" data-bg="transparent"></canvas>
+      <figure class="g g1" data-speed="0.15"><figcaption class="eyebrow">Qatar, 2024</figcaption><div class="media" data-label="Qatar 2024"><img src="assets/g1.jpg" alt="" onerror="this.remove()"></div></figure>
+      <blockquote class="g gq1 quote" data-speed="-0.1"><p class="serif">It doesn’t matter where you start, it’s how you progress from there.</p><svg class="mini-sig" viewBox="0 0 600 420"><path class="sig-path" d="M70 330c60-40 150-140 210-240 18-30 30-60 10-50-40 20-80 160-60 230 10 30 40-40 70-110 10-25 5 40 20 50 20 15 60-90 80-100 15-8-15 90 5 95 25 5 70-110 120-130"/></svg></blockquote>
+      <figure class="g g2" data-speed="0.35"><figcaption class="eyebrow">FIA Prize Giving, 2024</figcaption><div class="media" data-label="FIA 2024"><img src="assets/g2.jpg" alt="" onerror="this.remove()"></div></figure>
+      <figure class="g g3" data-speed="-0.2"><figcaption class="eyebrow">Miami GP, 2024</figcaption><div class="media" data-label="Miami 2024"><img src="assets/g3.jpg" alt="" onerror="this.remove()"></div></figure>
+      <figure class="g g4" data-speed="0.25"><figcaption class="eyebrow">Monaco, 2023</figcaption><div class="media" data-label="Monaco 2023"><img src="assets/g4.jpg" alt="" onerror="this.remove()"></div></figure>
+      <figure class="g g5" data-speed="0.05"><figcaption class="eyebrow">Britain, 2025</figcaption><div class="media media--helmet" data-helmet="season25"></div></figure>
+      <figure class="g g6" data-speed="0.4"><figcaption class="eyebrow">Battersea, 2024</figcaption><div class="media" data-label="Battersea 2024"><img src="assets/g6.jpg" alt="" onerror="this.remove()"></div></figure>
+      <figure class="g g7" data-speed="-0.15"><figcaption class="eyebrow">High Performance Gala, 2024</figcaption><div class="media" data-label="Gala 2024"><img src="assets/g7.jpg" alt="" onerror="this.remove()"></div></figure>
+      <figure class="g g8" data-speed="0.3"><figcaption class="eyebrow">Barcelona, 2024</figcaption><div class="media" data-label="Barcelona 2024"><img src="assets/g8.jpg" alt="" onerror="this.remove()"></div></figure>
+      <blockquote class="g gq2 quote" data-speed="0.1"><p class="serif">Since I was 7 years old and had my first experience with kart racing, I’ve worked tirelessly to make that dream come true.</p><svg class="mini-sig" viewBox="0 0 600 420"><path class="sig-path" d="M70 330c60-40 150-140 210-240 18-30 30-60 10-50-40 20-80 160-60 230 10 30 40-40 70-110 10-25 5 40 20 50 20 15 60-90 80-100 15-8-15 90 5 95 25 5 70-110 120-130"/></svg></blockquote>
+      <figure class="g g9" data-speed="0.45"><figcaption class="eyebrow">Austria, 2020</figcaption><div class="media" data-label="Austria 2020"><img src="assets/g9.jpg" alt="" onerror="this.remove()"></div></figure>
+      <figure class="g g10" data-speed="-0.05"><figcaption class="eyebrow">US, 2024</figcaption><div class="media" data-label="US 2024"><img src="assets/g10.jpg" alt="" onerror="this.remove()"></div></figure>
+    </section>
+
+    <!-- ============ ON TRACK / OFF TRACK ============ -->
+    <section class="otot" id="ontrack">
+      <div class="otot__head">
+        <div class="otot__title">
+          <h2><span class="serif-it">ON</span><span>TRACK</span></h2>
+          <svg class="otot__scribble" viewBox="0 0 300 120"><path class="sig-path" d="M10 90c30-60 60-80 80-60s-30 70-10 70 50-80 80-80-20 60 10 60 60-40 120-70"/></svg>
+          <h2><span class="serif-it">OFF</span><span>TRACK</span></h2>
+        </div>
+      </div>
+      <div class="otot__split">
+        <a href="#" class="otot__panel otot__panel--on">
+          <div class="media media--helmet" data-helmet="season24"><img src="assets/ontrack.jpg" alt="" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()"></div>
+          <div class="otot__info"><h3>ON TRACK</h3><p>Most recent results, career stats and photos from trackside.</p><span class="btn btn--lime"><span class="btn__txt" data-text="EXPLORE">EXPLORE</span><svg class="ico"><use href="#arrow"/></svg></span></div>
+        </a>
+        <a href="#" class="otot__panel otot__panel--off">
+          <div class="media" data-label="Off Track · campaña"><img src="assets/offtrack.jpg" alt="" onerror="this.remove()"></div>
+          <div class="otot__info"><h3>OFF TRACK</h3><p>Campaigns, shoots and other such promotional materials for fans.</p><span class="btn btn--lime"><span class="btn__txt" data-text="EXPLORE">EXPLORE</span><svg class="ico"><use href="#arrow"/></svg></span></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============ HELMETS ============ -->
+    <section class="helmets" id="helmets">
+      <div class="helmets__head">
+        <h2 class="helmets__title"><span class="reveal-line"><span>HELMETS</span></span><span class="reveal-line"><span class="serif lime">HALL OF FAME</span></span></h2>
+        <p class="helmets__copy">From his iconic blobs to innovative one-off designs, Lando has always been passionate about designing innovative and memorable helmets.</p>
+      </div>
+      <div class="helmets__grid" id="helmetGrid"></div>
+      <div class="helmets__cta">
+        <p class="serif">See more helmets and highlights<br>from Lando on the track</p>
+        <a href="#" class="btn btn--lime magnetic"><span class="btn__txt" data-text="VIEW ON TRACK">VIEW ON TRACK</span><svg class="ico"><use href="#arrow"/></svg></a>
+      </div>
+    </section>
+
+    <!-- ============ STORE ============ -->
+    <section class="store" id="store">
+      <canvas class="topo" data-color="#e2e4d6" data-bg="#efefe5"></canvas>
+      <div class="store__copy">
+        <span class="eyebrow store__eyebrow"><svg class="ico"><use href="#bag"/></svg> Lando Store</span>
+        <h2 class="store__title"><span class="reveal-line"><span>WORLD</span></span><span class="reveal-line"><span>DRIVERS'</span></span><span class="reveal-line"><span class="serif">CHAMPION</span></span></h2>
+        <p>Celebrate this incredible moment with a collection designed for the fans who never stopped believing. Wear it, frame it, treasure it forever.</p>
+        <a href="#" class="btn btn--lime magnetic"><span class="btn__txt" data-text="VISIT THE STORE">VISIT THE STORE</span><svg class="ico"><use href="#arrow"/></svg></a>
+      </div>
+      <div class="store__media">
+        <div class="sp sp1 media" data-speed="0.1" data-label="Hoodie · campeón"><img src="assets/store1.jpg" alt="" onerror="this.remove()"></div>
+        <div class="sp sp2 gold" data-speed="0.35"><span class="serif">Champion</span><small>Limited edition</small></div>
+        <div class="sp sp3 tee" data-speed="0.5"><div class="tee__shape"><div class="tee__print"></div></div></div>
+        <div class="sp sp4 tee tee--dark" data-speed="0.25"><div class="tee__shape"><div class="tee__print tee__print--lime"></div></div></div>
+        <div class="sp sp5 chrome" data-speed="0.6">LN1</div>
+      </div>
+    </section>
+
+    <!-- ============ PARTNERS ============ -->
+    <section class="partners" id="partners">
+      <svg class="partners__scribble" viewBox="0 0 900 400" aria-hidden="true"><path class="sig-path" d="M120 300c-40-60 10-200 120-220 60-10 30 60-20 110-60 60-90 120-40 120 70 0 120-110 160-150-30 60-60 140-20 140 40 0 70-100 110-170-40 100-70 190-30 190 40 0 90-140 140-230M560 40c-20 90-40 200-20 260"/></svg>
+      <div class="partners__head">
+        <h2><span class="reveal-line"><span>PARTNERS</span></span><span class="reveal-line"><span class="serif">&amp;CAMPAIGNS</span></span></h2>
+        <p>Lando is proud to collaborate with a range of partners, who share his passion for performance across a range of industries.</p>
+      </div>
+      <div class="logos">
+        <div class="logos__track">
+          <span>VELOCE</span><span class="serif">Apex&amp;Co</span><span>PITLANE</span><span class="serif">Hartwell</span><span>QUADRA</span><span>NOVA·TEK</span><span class="serif">Meridian</span><span>STRAIGHTLINE</span>
+          <span>VELOCE</span><span class="serif">Apex&amp;Co</span><span>PITLANE</span><span class="serif">Hartwell</span><span>QUADRA</span><span>NOVA·TEK</span><span class="serif">Meridian</span><span>STRAIGHTLINE</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SOCIALS ============ -->
+    <section class="socials" id="socials">
+      <h2 class="socials__title"><span class="reveal-line"><span>WHAT’S UP</span></span><span class="reveal-line"><span class="serif">ON SOCIALS</span></span></h2>
+      <div class="fan" id="fan"></div>
+      <p class="socials__follow serif">Follow Lando on social media</p>
+      <div class="socials__links">
+        <a href="#" class="ulink">TIKTOK</a><a href="#" class="ulink">INSTAGRAM</a><a href="#" class="ulink">YOUTUBE</a><a href="#" class="ulink">TWITCH</a>
+      </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer" id="footer">
+      <div class="footer__panel">
+        <canvas class="topo" data-color="#363a2c" data-bg="#282c20"></canvas>
+        <div class="footer__tab"></div>
+        <h2 class="footer__title">
+          <svg class="signature signature--footer" viewBox="0 0 600 420" aria-hidden="true"><path class="sig-path" d="M70 330c60-40 150-140 210-240 18-30 30-60 10-50-40 20-80 160-60 230 10 30 40-40 70-110 10-25 5 40 20 50 20 15 60-90 80-100 15-8-15 90 5 95 25 5 70-110 120-130 30-12-80 120-150 160-60 35-200 40-260 20"/></svg>
+          <span class="reveal-line"><span>ALWAYS <em class="serif">BRINGING</em></span></span>
+          <span class="reveal-line"><span>THE <em class="serif">FIGHT.</em></span></span>
+        </h2>
+        <div class="footer__cols">
+          <div class="footer__col">
+            <span class="eyebrow">Pages</span>
+            <a href="#" class="flink">HOME</a><a href="#ontrack" class="flink">ON TRACK</a><a href="#ontrack" class="flink">OFF TRACK</a><a href="#helmets" class="flink">CALENDAR</a>
+            <a href="#store" class="flink flink--lime">STORE</a>
+          </div>
+          <div class="footer__helmet" data-helmet="footer"></div>
+          <div class="footer__col footer__col--right">
+            <span class="eyebrow">Follow on</span>
+            <a href="#" class="flink">TIKTOK</a><a href="#" class="flink">INSTAGRAM</a><a href="#" class="flink">YOUTUBE</a><a href="#" class="flink">TWITCH</a>
+          </div>
+        </div>
+        <a href="#" class="btn btn--lime footer__biz magnetic"><span class="btn__txt" data-text="BUSINESS ENQUIRIES">BUSINESS ENQUIRIES</span><svg class="ico"><use href="#arrow"/></svg></a>
+      </div>
+      <div class="footer__bottom">
+        <span>© 2026 Recreación con fines de estudio.</span>
+        <span><a href="#">PRIVACY POLICY</a> &nbsp; <a href="#">TERMS</a></span>
+      </div>
+    </footer>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="hero-gl.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
